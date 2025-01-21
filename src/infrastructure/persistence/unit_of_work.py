@@ -4,7 +4,7 @@ from src.application.contracts.infrastructure.persistence.abc_notification_repos
 from src.application.contracts.infrastructure.persistence.abc_unit_of_work import (
     ABCUnitOfWork,
 )
-from src.infrastructure.persistence.mongo_db_client import DbClient
+from src.infrastructure.persistence.db_client import DbClient
 from src.infrastructure.persistence.repositories.notification_repository import (
     NotificationRepository,
 )

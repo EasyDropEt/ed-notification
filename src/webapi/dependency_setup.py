@@ -18,7 +18,7 @@ from src.application.features.notification.requests.queries import (
 )
 from src.common.generic_helpers import get_config
 from src.infrastructure.email.email_sender import EmailSender
-from src.infrastructure.persistence.mongo_db_client import DbClient
+from src.infrastructure.persistence.db_client import DbClient
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from src.infrastructure.sms.sms_sender import SmsSender
 
