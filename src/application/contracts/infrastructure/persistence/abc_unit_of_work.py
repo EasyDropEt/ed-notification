@@ -1,12 +1,11 @@
 from abc import ABCMeta, abstractmethod
 
-from src.application.contracts.infrastructure.persistence.abc_some_repository import (
-    ABCSomeEntityRepository,
+from src.application.contracts.infrastructure.persistence.abc_notification_repository import (
+    ABCNotificationRepository,
 )
 
 
 class ABCUnitOfWork(metaclass=ABCMeta):
     @property
     @abstractmethod
-    def some_entity_repository(self) -> ABCSomeEntityRepository:
-        pass
+    def notification_repository(self) -> ABCNotificationRepository: ...

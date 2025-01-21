@@ -1,12 +1,13 @@
 from abc import ABCMeta
 
+from ed_domain_model.entities.notification import Notification
+
 from src.application.contracts.infrastructure.persistence.abc_generic_repository import (
     ABCGenericRepository,
 )
-from src.domain.entities.some_entity import SomeEntity
 
 
-class ABCSomeEntityRepository(
-    ABCGenericRepository[SomeEntity],
+class ABCNotificationRepository(
+    ABCGenericRepository[Notification],
     metaclass=ABCMeta,
 ): ...

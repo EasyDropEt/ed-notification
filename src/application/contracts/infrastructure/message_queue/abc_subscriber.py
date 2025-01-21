@@ -9,6 +9,9 @@ CallbackFunction = Annotated[
 
 class ABCSubscriber(Generic[T], metaclass=ABCMeta):
     @abstractmethod
+    def add_callback_function(self, fn: CallbackFunction) -> None: ...
+
+    @abstractmethod
     def start(self) -> None: ...
 
     @abstractmethod
