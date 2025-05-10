@@ -2,8 +2,8 @@ from datetime import UTC, datetime
 
 from ed_domain.core.entities.notification import NotificationType
 from ed_domain.core.repositories.abc_unit_of_work import ABCUnitOfWork
-from ed_domain.email.abc_email_sender import ABCEmailSender
-from ed_domain.sms.abc_sms_sender import ABCSmsSender
+from ed_domain.utils.email.abc_email_sender import ABCEmailSender
+from ed_domain.utils.sms.abc_sms_sender import ABCSmsSender
 from rmediator.decorators import request_handler
 from rmediator.types import RequestHandler
 

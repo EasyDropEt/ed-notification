@@ -1,7 +1,7 @@
-from ed_infrastructure.email import EmailSender
 from ed_infrastructure.persistence.mongo_db.db_client import DbClient
 from ed_infrastructure.persistence.mongo_db.unit_of_work import UnitOfWork
-from ed_infrastructure.sms import SmsSender
+from ed_infrastructure.utils.email.email_sender import EmailSender
+from ed_infrastructure.utils.sms.sms_sender import SmsSender
 from rmediator.mediator import Mediator
 
 from ed_notification.application.features.notification.handlers.commands import (
