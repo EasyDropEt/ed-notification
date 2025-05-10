@@ -21,8 +21,7 @@ class GetNotificationQueryHandler(RequestHandler):
     async def handle(
         self, request: GetNotificationQuery
     ) -> BaseResponse[NotificationDto]:
-        notification = self._uow.notification_repository.get(
-            id=request.notification_id)
+        notification = self._uow.notification_repository.get(id=request.notification_id)
 
         return BaseResponse[NotificationDto].success(
             "Notification fetched successfully",

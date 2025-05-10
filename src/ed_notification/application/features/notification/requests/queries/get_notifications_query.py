@@ -4,8 +4,10 @@ from uuid import UUID
 from rmediator.decorators import request
 from rmediator.types import Request
 
-from ed_notification.application.common.responses.base_response import BaseResponse
-from ed_notification.application.features.notification.dtos.notification_dto import NotificationDto
+from ed_notification.application.common.responses.base_response import \
+    BaseResponse
+from ed_notification.application.features.notification.dtos.notification_dto import \
+    NotificationDto
 
 
 @request(BaseResponse[list[NotificationDto]])

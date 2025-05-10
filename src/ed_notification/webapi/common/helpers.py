@@ -1,11 +1,12 @@
 from enum import StrEnum
 from functools import wraps
-from typing import Any, Awaitable, Callable, Generic, Optional, TypeVar
+from typing import Awaitable, Callable, Generic, Optional, TypeVar
 
 from fastapi.types import DecoratedCallable
 from pydantic import BaseModel, Field
 
-from ed_notification.application.common.responses.base_response import BaseResponse
+from ed_notification.application.common.responses.base_response import \
+    BaseResponse
 
 T = TypeVar("T")
 
@@ -38,7 +39,7 @@ class GenericResponse(_ApiResponse, Generic[T]):
 
 
 def rest_endpoint(
-    func: Callable[..., Awaitable[BaseResponse]]
+    func: Callable[..., Awaitable[BaseResponse]],
 ) -> Callable[..., Awaitable[GenericResponse]]:
     @wraps(func)
     async def wrapper(*args, **kwargs) -> GenericResponse:
