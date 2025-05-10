@@ -17,8 +17,7 @@ class NotificationApiClient(ABCNotificationApiClient):
     def send_notification(
         self, send_notification_dto: SendNotificationDto
     ) -> ApiResponse[NotificationDto]:
-        endpoint = self._notification_endpoints.get_description(
-            "create_get_otp")
+        endpoint = self._notification_endpoints.get_description("create_get_otp")
 
         api_client = ApiClient[NotificationDto](endpoint)
 
@@ -44,8 +43,7 @@ class NotificationApiClient(ABCNotificationApiClient):
     def update_notification(
         self, notification_id: UUID, update_dto: UpdateNotificationDto
     ) -> ApiResponse[NotificationDto]:
-        endpoint = self._notification_endpoints.get_description(
-            "update_notification")
+        endpoint = self._notification_endpoints.get_description("update_notification")
 
         api_client = ApiClient[NotificationDto](endpoint)
 

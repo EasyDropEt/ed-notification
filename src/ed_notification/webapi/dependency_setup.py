@@ -18,8 +18,7 @@ from ed_notification.common.generic_helpers import get_config
 def get_mediator() -> Mediator:
     # Dependencies
     config = get_config()
-    db_client = DbClient(
-        config["mongo_db_connection_string"], config["db_name"])
+    db_client = DbClient(config["mongo_db_connection_string"], config["db_name"])
     uow = UnitOfWork(db_client)
     email_sender = EmailSender(config["resend_api_key"])
     sms_sender = SmsSender(config["infobig_key"])
