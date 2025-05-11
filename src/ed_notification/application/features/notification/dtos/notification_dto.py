@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import TypedDict
 from uuid import UUID
 
-from ed_domain_model.entities.notification import NotificationType
+from ed_domain.core.entities.notification import NotificationType
 
 
 class NotificationDto(TypedDict):

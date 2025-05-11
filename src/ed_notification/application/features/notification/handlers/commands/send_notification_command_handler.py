@@ -9,8 +9,8 @@ from rmediator.types import RequestHandler
 
 from ed_notification.application.common.responses.base_response import \
     BaseResponse
-from ed_notification.application.features.notification.dtos import (
-    NotificationDto, SendNotificationDto)
+from ed_notification.application.features.notification.dtos import \
+    NotificationDto
 from ed_notification.application.features.notification.requests.commands.send_notification_command import \
     SendNotificationCommand
 from ed_notification.common.generic_helpers import get_new_id
@@ -34,7 +34,7 @@ class SendNotificationCommandHandler(RequestHandler):
     async def handle(
         self, request: SendNotificationCommand
     ) -> BaseResponse[NotificationDto]:
-        dto: SendNotificationDto = request.dto
+        dto = request.dto
         created = self._uow.notification_repository.create(
             {
                 "id": get_new_id(),

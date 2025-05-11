@@ -483,20 +483,6 @@ files = [
 dev = ["check-manifest"]
 
 [[package]]
-name = "ed-domain-model"
-version = "0.0.3"
-description = "EasyDrop domain model Package"
-optional = false
-python-versions = ">=3.6"
-groups = ["main"]
-files = [
-    {file = "ed_domain_model-0.0.3-py3-none-any.whl", hash = "sha256:bb8e3de0f81ae66ba3364404526a963907e6af17bc5dd2c9e0baf3b19cc65ce5"},
-]
-
-[package.extras]
-dev = ["check-manifest"]
-
-[[package]]
 name = "ed-infrastructure"
 version = "0.1.9"
 description = "EasyDrop infrastructure Package"
@@ -1739,13 +1725,13 @@ jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
 name = "rmediator"
-version = "0.2.3"
+version = "0.2.7"
 description = "Request Mediator PyPI (Python Package Index) Package"
 optional = false
 python-versions = ">=3.6"
 groups = ["main"]
 files = [
-    {file = "rmediator-0.2.3-py3-none-any.whl", hash = "sha256:9f4fc7fb29e71fbf66e377f613084074f39ec48c572f586e92aa8acd6f0a3cac"},
+    {file = "rmediator-0.2.7-py3-none-any.whl", hash = "sha256:82bee056bd6f481a9923323b71a0327a8cd36f78d7deb6bc43be297115db56b4"},
 ]
 
 [package.extras]
@@ -2267,4 +2253,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "2c9b7fdc14acf0f88ab0261cedfb9611f76ce34b0de1e3bd6fa9f24eadc8e6cc"
+content-hash = "fc73cc9128f643e6d2c9125c548dd0fc911989304681e725fd6bf5287c92170e"
