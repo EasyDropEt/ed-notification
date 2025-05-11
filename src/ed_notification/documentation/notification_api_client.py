@@ -18,7 +18,7 @@ class NotificationApiClient(ABCNotificationApiClient):
         self, send_notification_dto: SendNotificationDto
     ) -> ApiResponse[NotificationDto]:
         endpoint = self._notification_endpoints.get_description(
-            "create_get_otp")
+            "send_notification")
 
         api_client = ApiClient[NotificationDto](endpoint)
 
