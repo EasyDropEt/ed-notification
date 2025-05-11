@@ -1,8 +1,9 @@
 from uuid import UUID
 
-from ed_domain.services.common.base_endpoint import BaseEndpoint
-from ed_domain.services.common.endpoint_description import EndpointDescription
-from ed_domain.services.common.http_method import HttpMethod
+from ed_domain.documentation.common.base_endpoint import BaseEndpoint
+from ed_domain.documentation.common.endpoint_description import \
+    EndpointDescription
+from ed_domain.documentation.common.http_method import HttpMethod
 
 from ed_notification.application.features.notification.dtos import (
     NotificationDto, SendNotificationDto, UpdateNotificationDto)
