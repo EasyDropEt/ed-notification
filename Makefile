@@ -1,3 +1,5 @@
+include .env
+
 .phony: format lint run test docker.build docker.build.quite docker.run export_deps build upload
 
 export_deps:
@@ -52,3 +54,9 @@ upload: build
 	@rm -rf .coverage
 	@rm -rf .eggs
 	@rm -rf .tox
+
+gcp:
+	@echo "Make: Building and pushing docker image to GCP..."
+	docker buildx build -t $(PROJECT_NAME):$(IMAGE_TAG) --platform linux/amd64 .
+	docker tag $(PROJECT_NAME):$(IMAGE_TAG) gcr.io/$(GCP_PROJECT_ID)/$(PROJECT_NAME)-$(IMAGE_TAG)
+	docker push gcr.io/$(GCP_PROJECT_ID)/$(PROJECT_NAME)-$(IMAGE_TAG)
