@@ -16,7 +16,7 @@ from ed_notification.webapi.common.helpers import (GenericResponse,
 from ed_notification.webapi.dependency_setup import get_mediator
 
 LOG = get_logger()
-router = APIRouter(prefix="/notifcations", tags=["Notification Feature"])
+router = APIRouter(prefix="/notifications", tags=["Notification Feature"])
 
 
 @router.post("", response_model=GenericResponse[NotificationDto])
