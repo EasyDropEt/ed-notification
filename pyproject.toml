@@ -17,10 +17,11 @@ psycopg2 = "^2.9.10"
 resend = "^2.5.1"
 python-dotenv = "^1.0.1"
 pymongo = "^4.10.1"
-ed-domain = "^0.3.2"
-ed-infrastructure = "^0.1.9"
+ed-domain = "^0.3.7"
+ed-infrastructure = "^0.1.15"
 jsons = "^1.6.3"
 twine = "^6.1.0"
+faststream = {extras = ["rabbit"], version = "^0.5.42"}
 
 
 [tool.poetry.group.test.dependencies]
