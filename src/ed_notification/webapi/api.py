@@ -6,7 +6,8 @@ from starlette.responses import JSONResponse
 from ed_notification.common.logging_helpers import get_logger
 from ed_notification.common.singleton_helpers import SingletonMeta
 from ed_notification.webapi.common.helpers import GenericResponse
-from ed_notification.webapi.controllers import notification_controller
+from ed_notification.webapi.controllers import (notification_controller,
+                                                rabbitmq_controller)
 
 LOG = get_logger()
 
@@ -32,6 +33,7 @@ class API(metaclass=SingletonMeta):
     def _include_routers(self) -> None:
         LOG.info("Including routers...")
         self._app.include_router(notification_controller.router)
+        self._app.include_router(rabbitmq_controller.router)
 
     def _contain_exceptions(self) -> None:
         @self._app.exception_handler(ApplicationException)
