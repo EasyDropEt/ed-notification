@@ -1,18 +1,20 @@
 from uuid import UUID
 
-from ed_domain.documentation.common.api_response import ApiResponse
+from ed_domain.documentation.api.definitions import ApiResponse
+from ed_infrastructure.documentation.api.endpoint_client import EndpointClient
 
 from ed_notification.application.features.notification.dtos import (
     NotificationDto, SendNotificationDto, UpdateNotificationDto)
-from ed_notification.common.api_helpers import ApiClient
-from ed_notification.documentation.abc_notification_api_client import \
+from ed_notification.documentation.api.abc_notification_api_client import \
     ABCNotificationApiClient
-from ed_notification.documentation.endpoints import NotificationEndpoint
+from ed_notification.documentation.api.notification_endpoint_descriptions import \
+    NotificationEndpointDescriptions
 
 
 class NotificationApiClient(ABCNotificationApiClient):
     def __init__(self, auth_api: str) -> None:
-        self._notification_endpoints = NotificationEndpoint(auth_api)
+        self._notification_endpoints = NotificationEndpointDescriptions(
+            auth_api)
 
     def send_notification(
         self, send_notification_dto: SendNotificationDto
@@ -20,7 +22,7 @@ class NotificationApiClient(ABCNotificationApiClient):
         endpoint = self._notification_endpoints.get_description(
             "send_notification")
 
-        api_client = ApiClient[NotificationDto](endpoint)
+        api_client = EndpointClient[NotificationDto](endpoint)
 
         return api_client({"request": send_notification_dto})
 
@@ -31,7 +33,7 @@ class NotificationApiClient(ABCNotificationApiClient):
             "get_notification_by_id"
         )
 
-        api_client = ApiClient[NotificationDto](endpoint)
+        api_client = EndpointClient[NotificationDto](endpoint)
 
         return api_client(
             {
@@ -47,7 +49,7 @@ class NotificationApiClient(ABCNotificationApiClient):
         endpoint = self._notification_endpoints.get_description(
             "update_notification")
 
-        api_client = ApiClient[NotificationDto](endpoint)
+        api_client = EndpointClient[NotificationDto](endpoint)
 
         return api_client(
             {
@@ -65,7 +67,7 @@ class NotificationApiClient(ABCNotificationApiClient):
             "get_notifications_for_user"
         )
 
-        api_client = ApiClient[list[NotificationDto]](endpoint)
+        api_client = EndpointClient[list[NotificationDto]](endpoint)
 
         return api_client(
             {

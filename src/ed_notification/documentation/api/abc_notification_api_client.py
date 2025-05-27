@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from uuid import UUID
 
-from ed_domain.documentation.common.api_response import ApiResponse
+from ed_domain.documentation.api.definitions import ApiResponse
 
 from ed_notification.application.features.notification.dtos import (
     NotificationDto, SendNotificationDto, UpdateNotificationDto)

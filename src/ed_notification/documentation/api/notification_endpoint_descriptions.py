@@ -1,15 +1,15 @@
 from uuid import UUID
 
-from ed_domain.documentation.common.base_endpoint import BaseEndpoint
-from ed_domain.documentation.common.endpoint_description import \
-    EndpointDescription
-from ed_domain.documentation.common.http_method import HttpMethod
+from ed_domain.documentation.api.abc_endpoint_descriptions import \
+    ABCEndpointDescriptions
+from ed_domain.documentation.api.definitions import (EndpointDescription,
+                                                     HttpMethod)
 
 from ed_notification.application.features.notification.dtos import (
     NotificationDto, SendNotificationDto, UpdateNotificationDto)
 
 
-class NotificationEndpoint(BaseEndpoint):
+class NotificationEndpointDescriptions(ABCEndpointDescriptions):
     def __init__(self, base_url: str):
         self._base_url = base_url
         self._descriptions: list[EndpointDescription] = [

@@ -13,11 +13,11 @@ from ed_notification.application.features.notification.requests.commands.send_no
 from ed_notification.common.generic_helpers import get_config
 from ed_notification.webapi.dependency_setup import get_mediator
 
+LOG = get_logger()
+
 config = get_config()
 router = RabbitRouter(config["rabbitmq"]["url"])
 queue = RabbitQueue(name=config["rabbitmq"]["queue"], durable=True)
-
-LOG = get_logger()
 
 
 @router.subscriber(queue)
@@ -25,4 +25,5 @@ async def send_notification(
     message: SendNotificationDto,
     mediator: Annotated[Mediator, Depends(get_mediator)],
 ):
+    LOG.info(f"Received message: {message}")
     return await mediator.send(SendNotificationCommand(dto=message))
