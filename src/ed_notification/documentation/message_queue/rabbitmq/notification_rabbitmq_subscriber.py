@@ -15,7 +15,7 @@ class NotificationRabbitMQSubscriber(ABCNotificationRabbitMQSubscriber):
         self._queues = NotificationQueueDescriptions(connection_url)
 
     def send_notification(self, send_notification_dto: SendNotificationDto) -> None:
-        queue = self._queues.get_queue("notification")
+        queue = self._queues.get_queue("send_notification")
         producer = RabbitMQProducer[SendNotificationDto](
             queue["connection_parameters"]["url"],
             queue["connection_parameters"]["queue"],
