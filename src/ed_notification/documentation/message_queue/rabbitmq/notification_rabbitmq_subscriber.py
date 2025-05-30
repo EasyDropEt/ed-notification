@@ -3,8 +3,8 @@ from ed_infrastructure.documentation.message_queue.rabbitmq.rabbitmq_producer im
 
 from ed_notification.application.features.notification.dtos.send_notification_dto import \
     SendNotificationDto
-from ed_notification.documentation.message_queue.rabbitmq.abc_notification_rabbitmq_subscriber import \
-    ABCNotificationRabbitMQSubscriber
+from ed_notification.documentation.message_queue.rabbitmq.abc_notification_rabbitmq_subscriber import (
+    ABCNotificationRabbitMQSubscriber, NotificationQueues)
 from ed_notification.documentation.message_queue.rabbitmq.notification_queue_descriptions import \
     NotificationQueueDescriptions
 
@@ -15,7 +15,7 @@ class NotificationRabbitMQSubscriber(ABCNotificationRabbitMQSubscriber):
         self._queues = NotificationQueueDescriptions(connection_url)
 
     def send_notification(self, send_notification_dto: SendNotificationDto) -> None:
-        queue = self._queues.get_queue("send_notification")
+        queue = self._queues.get_queue(NotificationQueues.SEND_NOTIFICATION)
         producer = RabbitMQProducer[SendNotificationDto](
             queue["connection_parameters"]["url"],
             queue["connection_parameters"]["queue"],

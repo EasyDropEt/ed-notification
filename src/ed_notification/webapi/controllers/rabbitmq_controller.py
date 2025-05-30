@@ -11,16 +11,17 @@ from ed_notification.application.features.notification.dtos.send_notification_dt
 from ed_notification.application.features.notification.requests.commands.send_notification_command import \
     SendNotificationCommand
 from ed_notification.common.generic_helpers import get_config
+from ed_notification.documentation.message_queue.rabbitmq.abc_notification_rabbitmq_subscriber import \
+    NotificationQueues
 from ed_notification.webapi.dependency_setup import get_mediator
 
 LOG = get_logger()
 
 config = get_config()
 router = RabbitRouter(config["rabbitmq"]["url"])
-queue = RabbitQueue(name=config["rabbitmq"]["queue"], durable=True)
 
 
-@router.subscriber(queue)
+@router.subscriber(RabbitQueue(name=NotificationQueues.SEND_NOTIFICATION, durable=True))
 async def send_notification(
     message: SendNotificationDto,
     mediator: Annotated[Mediator, Depends(get_mediator)],
