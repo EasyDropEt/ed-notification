@@ -5,7 +5,7 @@ from ed_domain.documentation.message_queue.rabbitmq.definitions.queue_descriptio
 
 from ed_notification.application.features.notification.dtos.send_notification_dto import \
     SendNotificationDto
-from src.ed_notification.documentation.message_queue.rabbitmq.abc_notification_rabbitmq_subscriber import \
+from ed_notification.documentation.message_queue.rabbitmq.abc_notification_rabbitmq_subscriber import \
     NotificationQueues
 
 
