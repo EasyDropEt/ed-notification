@@ -28,6 +28,7 @@ class NotificationRabbitMQSubscriber(ABCNotificationRabbitMQSubscriber):
         }
 
     async def start(self) -> None:
+        LOG.info("Starting producers...")
         for producer in self._producers.values():
             try:
                 LOG.info(f"Starting producer for queue: {producer._queue}")
