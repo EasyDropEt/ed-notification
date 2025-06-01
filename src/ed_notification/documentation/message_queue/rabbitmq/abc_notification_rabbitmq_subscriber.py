@@ -11,5 +11,6 @@ class NotificationQueues(StrEnum):
 
 class ABCNotificationRabbitMQSubscriber(metaclass=ABCMeta):
     @abstractmethod
-    def send_notification(
-        self, send_notification_dto: SendNotificationDto) -> None: ...
+    async def send_notification(
+        self, send_notification_dto: SendNotificationDto
+    ) -> None: ...

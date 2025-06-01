@@ -21,7 +21,7 @@ config = get_config()
 router = RabbitRouter(config["rabbitmq"]["url"])
 
 
-@router.subscriber(RabbitQueue(name=NotificationQueues.SEND_NOTIFICATION, durable=True))
+@router.subscriber(RabbitQueue(NotificationQueues.SEND_NOTIFICATION, durable=True))
 async def send_notification(
     message: SendNotificationDto,
     mediator: Annotated[Mediator, Depends(get_mediator)],
