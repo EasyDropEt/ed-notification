@@ -525,13 +525,13 @@ dev = ["check-manifest"]
 
 [[package]]
 name = "ed-infrastructure"
-version = "0.2.6"
+version = "0.2.7"
 description = "EasyDrop infrastructure Package"
 optional = false
 python-versions = ">=3.12"
 groups = ["main"]
 files = [
-    {file = "ed_infrastructure-0.2.6-py3-none-any.whl", hash = "sha256:aa148a43d6901f8fe77ff9e245eba29e7f0d86b35d81966aced29e0d09c950a8"},
+    {file = "ed_infrastructure-0.2.7-py3-none-any.whl", hash = "sha256:07b88df4b120b745ceed614ba5ad0cf948e322c830b195f021e0f16792141038"},
 ]
 
 [package.extras]
@@ -2785,4 +2785,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "489426ae0ebb3e275ae4b1244375ed163a1501468073c45de6b585c740dd9be3"
+content-hash = "7ee46dedb7a23989be641f65d03f602e24ae3f1a3054fd7b10f28365c272432e"
