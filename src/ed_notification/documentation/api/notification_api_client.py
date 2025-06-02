@@ -16,7 +16,7 @@ class NotificationApiClient(ABCNotificationApiClient):
         self._notification_endpoints = NotificationEndpointDescriptions(
             auth_api)
 
-    def send_notification(
+    async def send_notification(
         self, send_notification_dto: SendNotificationDto
     ) -> ApiResponse[NotificationDto]:
         endpoint = self._notification_endpoints.get_description(
@@ -24,9 +24,9 @@ class NotificationApiClient(ABCNotificationApiClient):
 
         api_client = EndpointClient[NotificationDto](endpoint)
 
-        return api_client({"request": send_notification_dto})
+        return await api_client({"request": send_notification_dto})
 
-    def get_notification_by_id(
+    async def get_notification_by_id(
         self, notification_id: UUID
     ) -> ApiResponse[NotificationDto]:
         endpoint = self._notification_endpoints.get_description(
@@ -35,7 +35,7 @@ class NotificationApiClient(ABCNotificationApiClient):
 
         api_client = EndpointClient[NotificationDto](endpoint)
 
-        return api_client(
+        return await api_client(
             {
                 "path_params": {
                     "notification_id": notification_id,
@@ -43,7 +43,7 @@ class NotificationApiClient(ABCNotificationApiClient):
             }
         )
 
-    def update_notification(
+    async def update_notification(
         self, notification_id: UUID, update_dto: UpdateNotificationDto
     ) -> ApiResponse[NotificationDto]:
         endpoint = self._notification_endpoints.get_description(
@@ -51,7 +51,7 @@ class NotificationApiClient(ABCNotificationApiClient):
 
         api_client = EndpointClient[NotificationDto](endpoint)
 
-        return api_client(
+        return await api_client(
             {
                 "path_params": {
                     "notification_id": notification_id,
@@ -60,7 +60,7 @@ class NotificationApiClient(ABCNotificationApiClient):
             }
         )
 
-    def get_notifications_for_user(
+    async def get_notifications_for_user(
         self, user_id: UUID
     ) -> ApiResponse[list[NotificationDto]]:
         endpoint = self._notification_endpoints.get_description(
@@ -69,7 +69,7 @@ class NotificationApiClient(ABCNotificationApiClient):
 
         api_client = EndpointClient[list[NotificationDto]](endpoint)
 
-        return api_client(
+        return await api_client(
             {
                 "path_params": {
                     "user_id": user_id,

@@ -9,21 +9,21 @@ from ed_notification.application.features.notification.dtos import (
 
 class ABCNotificationApiClient(metaclass=ABCMeta):
     @abstractmethod
-    def send_notification(
+    async def send_notification(
         self, send_notification_dto: SendNotificationDto
     ) -> ApiResponse[NotificationDto]: ...
 
     @abstractmethod
-    def get_notification_by_id(
+    async def get_notification_by_id(
         self, notification_id: UUID
     ) -> ApiResponse[NotificationDto]: ...
 
     @abstractmethod
-    def update_notification(
+    async def update_notification(
         self, notification_id: UUID, update_dto: UpdateNotificationDto
     ) -> ApiResponse[NotificationDto]: ...
 
     @abstractmethod
-    def get_notifications_for_user(
+    async def get_notifications_for_user(
         self, user_id: UUID
     ) -> ApiResponse[list[NotificationDto]]: ...
