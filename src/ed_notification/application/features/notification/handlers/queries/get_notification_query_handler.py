@@ -1,4 +1,5 @@
-from ed_domain.core.repositories.abc_unit_of_work import ABCUnitOfWork
+from ed_domain.persistence.async_repositories.abc_async_unit_of_work import \
+    ABCAsyncUnitOfWork
 from rmediator.decorators import request_handler
 from rmediator.types import RequestHandler
 
@@ -15,15 +16,18 @@ LOG = get_logger()
 
 @request_handler(GetNotificationQuery, BaseResponse[NotificationDto])
 class GetNotificationQueryHandler(RequestHandler):
-    def __init__(self, uow: ABCUnitOfWork):
+    def __init__(self, uow: ABCAsyncUnitOfWork):
         self._uow = uow
 
     async def handle(
         self, request: GetNotificationQuery
     ) -> BaseResponse[NotificationDto]:
-        notification = self._uow.notification_repository.get(id=request.notification_id)
+        async with self._uow.transaction():
+            notification = await self._uow.notification_repository.get(
+                id=request.notification_id
+            )
 
-        return BaseResponse[NotificationDto].success(
-            "Notification fetched successfully",
-            NotificationDto(**notification),  # type: ignore
-        )
+            return BaseResponse[NotificationDto].success(
+                "Notification fetched successfully",
+                NotificationDto(**notification.__dict__),
+            )

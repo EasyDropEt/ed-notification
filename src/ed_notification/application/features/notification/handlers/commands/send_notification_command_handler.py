@@ -1,8 +1,10 @@
 from datetime import UTC, datetime
 
 from ed_domain.common.exceptions import ApplicationException, Exceptions
+from ed_domain.core.entities import Notification
 from ed_domain.core.entities.notification import NotificationType
-from ed_domain.core.repositories.abc_unit_of_work import ABCUnitOfWork
+from ed_domain.persistence.async_repositories.abc_async_unit_of_work import \
+    ABCAsyncUnitOfWork
 from ed_domain.utils.email.abc_email_sender import ABCEmailSender
 from ed_domain.utils.sms.abc_sms_sender import ABCSmsSender
 from rmediator.decorators import request_handler
@@ -26,7 +28,7 @@ class SendNotificationCommandHandler(RequestHandler):
     def __init__(
         self,
         config: ResendConfig,
-        uow: ABCUnitOfWork,
+        uow: ABCAsyncUnitOfWork,
         email_sender: ABCEmailSender,
         sms_sender: ABCSmsSender,
     ):
@@ -38,52 +40,56 @@ class SendNotificationCommandHandler(RequestHandler):
     async def handle(
         self, request: SendNotificationCommand
     ) -> BaseResponse[NotificationDto]:
-        dto = request.dto
-        user = self._uow.auth_user_repository.get(id=request.dto["user_id"])
-        if not user:
-            raise ApplicationException(
-                Exceptions.BadRequestException,
-                "Notification failed.",
-                ["User not found"],
-            )
+        async with self._uow.transaction():
+            dto = request.dto
+            user = await self._uow.auth_user_repository.get(id=dto["user_id"])
+            print("USER", user)
 
-        if "email" not in user:
-            raise ApplicationException(
-                Exceptions.BadRequestException,
-                "Notification failed.",
-                ["User email not found"],
-            )
-
-        created_notification = self._uow.notification_repository.create(
-            {
-                "id": get_new_id(),
-                "user_id": dto["user_id"],
-                "message": dto["message"],
-                "read_status": False,
-                "create_datetime": datetime.now(UTC),
-                "update_datetime": datetime.now(UTC),
-                "notification_type": NotificationType[dto["notification_type"]],
-                "deleted": False,
-            }
-        )
-
-        try:
-            if dto["notification_type"] == NotificationType.EMAIL:
-                await self._email_sender.send(
-                    self._config["from_email"],
-                    user["email"],
-                    "EasyDrop Notification",
-                    dto["message"],
+            if not user:
+                raise ApplicationException(
+                    Exceptions.BadRequestException,
+                    "Notification failed.",
+                    ["User not found"],
                 )
-        except Exception as e:
-            LOG.error(f"Failed to send email: {e}")
-            raise ApplicationException(
-                Exceptions.BadRequestException,
-                "Notification failed.",
-                ["Cannot send email."],
+
+            if not user.email:
+                raise ApplicationException(
+                    Exceptions.BadRequestException,
+                    "Notification failed.",
+                    ["User email not found"],
+                )
+
+            created_notification = await self._uow.notification_repository.create(
+                Notification(
+                    id=get_new_id(),
+                    user_id=user.id,
+                    message=dto["message"],
+                    read_status=False,
+                    create_datetime=datetime.now(UTC),
+                    update_datetime=datetime.now(UTC),
+                    notification_type=NotificationType[dto["notification_type"]],
+                    deleted=False,
+                    deleted_datetime=datetime.now(UTC),
+                )
             )
+
+            try:
+                if dto["notification_type"] == NotificationType.EMAIL:
+                    await self._email_sender.send(
+                        self._config["from_email"],
+                        user.email,
+                        "EasyDrop Notification",
+                        dto["message"],
+                    )
+            except Exception as e:
+                LOG.error(f"Failed to send email: {e}")
+                raise ApplicationException(
+                    Exceptions.BadRequestException,
+                    "Notification failed.",
+                    ["Cannot send email."],
+                )
 
         return BaseResponse[NotificationDto].success(
             "Notification sent",
-            NotificationDto(**created_notification),  # type: ignore
+            NotificationDto(**created_notification.__dict__),
         )

@@ -1,6 +1,13 @@
 from typing import TypedDict
 
 
+class DbConfig(TypedDict):
+    user: str
+    password: str
+    db: str
+    host: str
+
+
 class RabbitMQConfig(TypedDict):
     url: str
     queue: str
@@ -14,8 +21,7 @@ class ResendConfig(TypedDict):
 class Config(TypedDict):
     resend: ResendConfig
     infobig_key: str
-    mongo_db_connection_string: str
-    db_name: str
+    db: DbConfig
     rabbitmq: RabbitMQConfig
 
 

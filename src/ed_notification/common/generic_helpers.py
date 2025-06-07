@@ -15,14 +15,33 @@ def get_config() -> Config:
 
     return {
         "resend": {
-            "api_key": os.getenv("RESEND_API_KEY") or "",
-            "from_email": os.getenv("RESEND_FROM_EMAIL") or "",
+            "api_key": _get_env_variable("RESEND_API_KEY"),
+            "from_email": _get_env_variable("RESEND_FROM_EMAIL"),
         },
-        "mongo_db_connection_string": os.getenv("MONGO_DB_KEY") or "",
-        "db_name": os.getenv("DB_NAME") or "",
-        "infobig_key": os.getenv("INFOBIG_KEY") or "",
+        "db": {
+            "db": _get_env_variable("POSTGRES_DB"),
+            "user": _get_env_variable("POSTGRES_USER"),
+            "password": _get_env_variable("POSTGRES_PASSWORD"),
+            "host": _get_env_variable("POSTGRES_HOST"),
+        },
+        "infobig_key": _get_env_variable("INFOBIG_KEY"),
         "rabbitmq": {
-            "url": os.getenv("RABBITMQ_URL") or "",
-            "queue": os.getenv("RABBITMQ_QUEUE") or "",
+            "url": _get_env_variable("RABBITMQ_URL"),
+            "queue": _get_env_variable("RABBITMQ_QUEUE"),
         },
     }
+
+
+def _get_env_variable(name: str) -> str:
+    value = os.getenv(name)
+    if value is None:
+        raise ValueError(f"Environment variable '{name}' is not set.")
+
+    if not isinstance(value, str):
+        raise TypeError(f"Environment variable '{name}' must be a string.")
+
+    value = value.strip()
+    if not value:
+        raise ValueError(f"Environment variable '{name}' cannot be empty.")
+
+    return value
