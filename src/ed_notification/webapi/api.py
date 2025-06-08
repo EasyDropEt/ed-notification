@@ -16,7 +16,6 @@ class API(FastAPI):
         super().__init__(*args, **kwargs)
         self._routers = [
             notification_controller.router,
-            rabbitmq_controller.router,
         ]
 
     @property
