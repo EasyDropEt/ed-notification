@@ -23,6 +23,7 @@ class Config(TypedDict):
     infobig_key: str
     db: DbConfig
     rabbitmq: RabbitMQConfig
+    default_email_destinations: list[str]
 
 
 class TestMessage(TypedDict):

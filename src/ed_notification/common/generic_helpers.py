@@ -29,6 +29,11 @@ def get_config() -> Config:
             "url": _get_env_variable("RABBITMQ_URL"),
             "queue": _get_env_variable("RABBITMQ_QUEUE"),
         },
+        "default_email_destinations": [
+            _get_env_variable("DEFAULT_EMAIL_DESTINATION_1"),
+            _get_env_variable("DEFAULT_EMAIL_DESTINATION_2"),
+            _get_env_variable("DEFAULT_EMAIL_DESTINATION_3"),
+        ],
     }
 
 
