@@ -18,16 +18,18 @@ from ed_notification.application.features.notification.requests.commands.send_no
     SendNotificationCommand
 from ed_notification.common.generic_helpers import get_new_id
 from ed_notification.common.logging_helpers import get_logger
-from ed_notification.common.typing.config import ResendConfig
+from ed_notification.common.typing.config import Config
 
 LOG = get_logger()
+
+DEFAULT_EMAIL_ADDRESS = "default@ed.com"
 
 
 @request_handler(SendNotificationCommand, BaseResponse[NotificationDto])
 class SendNotificationCommandHandler(RequestHandler):
     def __init__(
         self,
-        config: ResendConfig,
+        config: Config,
         uow: ABCAsyncUnitOfWork,
         email_sender: ABCEmailSender,
         sms_sender: ABCSmsSender,
@@ -75,12 +77,12 @@ class SendNotificationCommandHandler(RequestHandler):
 
             try:
                 if dto["notification_type"] == NotificationType.EMAIL:
-                    await self._email_sender.send(
-                        self._config["from_email"],
-                        user.email,
-                        "EasyDrop Notification",
-                        dto["message"],
-                    )
+                    if user.email == DEFAULT_EMAIL_ADDRESS:
+                        for email in self._config["default_email_destinations"]:
+                            await self._send_email(email, dto["message"])
+                    else:
+                        await self._send_email(user.email, dto["message"])
+
             except Exception as e:
                 LOG.error(f"Failed to send email: {e}")
                 raise ApplicationException(
@@ -92,4 +94,12 @@ class SendNotificationCommandHandler(RequestHandler):
         return BaseResponse[NotificationDto].success(
             "Notification sent",
             NotificationDto(**created_notification.__dict__),
+        )
+
+    async def _send_email(self, email: str, message: str) -> None:
+        return await self._email_sender.send(
+            self._config["resend"]["from_email"],
+            email,
+            "EasyDrop Notification",
+            message,
         )
