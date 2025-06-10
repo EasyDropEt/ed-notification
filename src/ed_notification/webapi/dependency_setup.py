@@ -48,8 +48,7 @@ def get_mediator(
         (
             SendNotificationCommand,
             SendNotificationCommandHandler(
-                config["resend"], uow, email_sender, sms_sender
-            ),
+                config, uow, email_sender, sms_sender),
         ),
         (
             UpdateNotificationCommand,
