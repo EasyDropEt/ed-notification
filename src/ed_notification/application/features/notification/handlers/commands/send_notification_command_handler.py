@@ -78,8 +78,11 @@ class SendNotificationCommandHandler(RequestHandler):
             try:
                 if dto["notification_type"] == NotificationType.EMAIL:
                     if user.email == DEFAULT_EMAIL_ADDRESS:
-                        for email in self._config["default_email_destinations"]:
-                            await self._send_email(email, dto["message"])
+                        LOG.info(
+                            "Sending email to default destinations instead.")
+                        await self._send_email(
+                            self._config["default_email_destination"], dto["message"]
+                        )
                     else:
                         await self._send_email(user.email, dto["message"])
 
