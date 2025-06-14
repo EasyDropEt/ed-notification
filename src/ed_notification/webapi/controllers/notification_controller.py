@@ -56,11 +56,3 @@ async def get_notifications_for_user(
     mediator: Annotated[Mediator, Depends(get_mediator)],
 ):
     return await mediator.send(GetNotificationsQuery(user_id=user_id))
-
-
-@router.websocket("/{user_id}")
-async def websocket(user_id: UUID, ws: WebSocket) -> None:
-    await ws.accept()
-    while True:
-        data = await ws.receive_text()
-        await ws.send_text(f"Message text was: {data}")

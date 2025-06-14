@@ -29,7 +29,7 @@ class NotificationEndpointDescriptions(ABCEndpointDescriptions):
             },
             {
                 "name": "update_notification",
-                "method": HttpMethod.PUT,
+                "method": HttpMethod.PATCH,
                 "path": f"{self._base_url}/notifications/{{notification_id}}",
                 "path_params": {"notification_id": UUID},
                 "request_model": UpdateNotificationDto,
